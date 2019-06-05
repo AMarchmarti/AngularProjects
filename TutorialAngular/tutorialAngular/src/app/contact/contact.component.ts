@@ -1,13 +1,34 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { timingSafeEqual } from 'crypto';
 
 @Component({
   selector: 'app-contact',
   templateUrl: './contact.component.html',
-  styleUrls: ['./contact.component.css']
+  styleUrls: ['./contact.component.scss']
 })
 export class ContactComponent implements OnInit {
 
-  constructor() { }
+  submitted = false;
+  succes = false;
+  messageForm: FormGroup;
+
+  constructor(private formBuilder: FormBuilder) {
+      this.messageForm = this.formBuilder.group({
+        name: ['', Validators.required],
+        message: ['', Validators.required]
+      })
+   }
+
+   onSubmit(){
+     this.submitted = true;
+
+     if(this.messageForm.invalid){
+       return;
+     }
+
+     this.succes = true;
+   }
 
   ngOnInit() {
   }
